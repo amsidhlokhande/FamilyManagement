@@ -1,0 +1,18 @@
+<h2>Person Details</h2>
+
+<hr />
+<div *ngIf="person | async as p">
+    <div>
+        <label><b>Person ID: </b></label> {{p.personId}}
+    </div>
+    <div>
+        <label><b>Person Name: </b></label> {{p.personName}}
+    </div>
+    <div>
+        <label><b>Address: </b></label> {{p.personAddress}}
+    </div>
+</div>
+
+<br>
+<br>
+<button (click)="list()" class="btn btn-primary">Back to Person List</button><br>

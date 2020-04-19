@@ -1,0 +1,69 @@
+#----------------Common Properties across all profiles---------
+server:
+  port: 8181
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    .: error
+    org.springframework: ERROR
+    com.amsidh.mvc: INFO
+# Logs the JDBC parameters passed to a query
+    org.hibernate:
+      SQL: debug
+      type: trace
+      additivity: false
+
+#Database Config
+spring:
+  profiles: 
+    active: "@spring.profiles.active@"
+  datasource:
+    initialization-mode: always
+    data: "classpath:import_schema.sql, classpath:import_data.sql"
+    
+#Spring JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+
+#------------------H2 Profile-------------------------------
+---
+spring:
+  profiles: h2
+  datasource:
+    url: "jdbc:h2:~/family_data_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS book_store_dev"
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect  
+    
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console  
+   
+#--------------------------MYSQL Profile----------------------
+---
+spring:
+  profiles: mysql
+  datasource:
+    url: "jdbc:mysql://localhost:3306/family_app_dev?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8"
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+                
+   
+  
